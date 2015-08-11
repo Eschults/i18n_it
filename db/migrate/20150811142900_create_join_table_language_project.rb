@@ -1,8 +1,8 @@
 class CreateJoinTableLanguageProject < ActiveRecord::Migration
   def change
-    create_join_table :packs, :sources do |t|
-      t.index [:pack_id, :source_id]
-      t.index [:source_id, :pack_id]
+    create_join_table :languages, :projects do |t|
+      t.index [:language_id, :project_id]
+      t.index [:project_id, :language_id]
     end
   end
 end

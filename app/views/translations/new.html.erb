@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="row">
+        <div class="col-xs-2">
+          <div class="cell">
+            Company:
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="cell">
+            <%= form_tag select_company_path do %>
+              <%= select_tag current_user.companies %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="row" id="headers">
+        <div class="col-xs-2">
+          <div class="cell">
+            Translation key
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="cell">
+            FR
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="cell">
+            EN
+          </div>
+        </div>
+        <div class="col-xs-2">
+          <div class="cell">
+            ES
+          </div>
+        </div>
+      </div>
+      <%= form_tag url: bucket_path(@bucket), remote: true do %>
+        <div class="row" id="new">
+          <div class="col-xs-2">
+            <div class="cell">
+              <%= text_field_tag :tanslation_key, nil, placeholder: 'ex : welcome', class: 'form-control' %>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="cell">
+              <%= text_field_tag :value_fr, nil, placeholder: 'Bienvenue %s !', class: 'form-control' %>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="cell">
+              <%= text_field_tag :value_en, nil, placeholder: 'Welcome %s!', class: 'form-control' %>
+            </div>
+          </div>
+          <div class="col-xs-2">
+            <div class="cell">
+              <%= text_field_tag :value_es, nil, placeholder: 'Hola %s', class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-2">
+            <div class="cell">
+              <%= submit_tag 'Add translation', class: 'btn btn-primary' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

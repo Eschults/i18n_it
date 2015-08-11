@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150811143650) do
+ActiveRecord::Schema.define(version: 20150811174804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20150811143650) do
   create_table "buckets", force: :cascade do |t|
     t.string   "bucket_name"
     t.integer  "project_id"
-    t.string   "type"
+    t.string   "kind"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
@@ -48,13 +48,13 @@ ActiveRecord::Schema.define(version: 20150811143650) do
     t.datetime "updated_at",   null: false
   end
 
-  create_table "packs_sources", id: false, force: :cascade do |t|
-    t.integer "pack_id",   null: false
-    t.integer "source_id", null: false
+  create_table "languages_projects", id: false, force: :cascade do |t|
+    t.integer "language_id", null: false
+    t.integer "project_id",  null: false
   end
 
-  add_index "packs_sources", ["pack_id", "source_id"], name: "index_packs_sources_on_pack_id_and_source_id", using: :btree
-  add_index "packs_sources", ["source_id", "pack_id"], name: "index_packs_sources_on_source_id_and_pack_id", using: :btree
+  add_index "languages_projects", ["language_id", "project_id"], name: "index_languages_projects_on_language_id_and_project_id", using: :btree
+  add_index "languages_projects", ["project_id", "language_id"], name: "index_languages_projects_on_project_id_and_language_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
     t.integer  "company_id"
@@ -77,7 +77,7 @@ ActiveRecord::Schema.define(version: 20150811143650) do
 
   create_table "translations", force: :cascade do |t|
     t.string   "translation_key"
-    t.text     "value"
+    t.text     "text"
     t.integer  "bucket_id"
     t.integer  "sub_bucket_id"
     t.integer  "language_id"

@@ -5,7 +5,7 @@
 #  id          :integer          not null, primary key
 #  bucket_name :string
 #  project_id  :integer
-#  type        :string
+#  kind        :string
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #

@@ -4,7 +4,7 @@
 #
 #  id              :integer          not null, primary key
 #  translation_key :string
-#  value           :text
+#  text            :text
 #  bucket_id       :integer
 #  sub_bucket_id   :integer
 #  language_id     :integer
@@ -24,7 +24,7 @@ class Translation < ActiveRecord::Base
   belongs_to :language
 
   validates :translation_key, presence: true
-  validates :value_key, presence: true
+  validates :text, presence: true
   validates :bucket, presence: true
   validates :language, presence: true
 end
