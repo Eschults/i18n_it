@@ -35,7 +35,7 @@
                 </tr>
               <% end %>
               <tr>
-                <td><%= text_field_tag "translation_keys[new_translation_key][value]", nil, placeholder: "New key", class: "form-control" %></td>
+                <td><%= text_field_tag "translation_keys[new_translation_key][value]", nil, placeholder: "New translation...", class: "form-control" %></td>
                 <% @bucket.project.languages.each do |language| %>
                   <td><%= text_field_tag "translation_keys[new_translation_key][#{language.language_key}]", nil, class: "form-control" %></td>
                 <% end %>

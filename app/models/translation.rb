@@ -31,4 +31,20 @@ class Translation < ActiveRecord::Base
   def self.get(translation_key, language)
     Translation.find_or_create_by(translation_key: translation_key, language: language)
   end
+
+  def translations_including_self_in_array
+    output = []
+    bucket.project.languages.each do |language|
+      output << Translation.find_by(language: language, bucket: bucket, translation_key: translation_key)
+    end
+    output
+  end
+
+  def translations_including_self_in_hash
+    output = {}
+    translations_including_self_in_array.each do |translation|
+      output[translation.language.language_key] = translation.text
+    end
+    output
+  end
 end

@@ -13,4 +13,5 @@ Rails.application.routes.draw do
     resources :translations, only: :index
   end
   get 'apis/translations', to: "apis#translations"
+  get 'apis/t', to: "apis#t"
 end
