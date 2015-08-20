@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <% @buckets.each do |bucket| %>
+        <%= link_to bucket.bucket_name, edit_bucket_path(bucket) %>
+      <% end %>
+    </div>
+  </div>
+</div>
