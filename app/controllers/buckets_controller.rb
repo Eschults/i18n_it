@@ -1,17 +1,22 @@
 class BucketsController < ApplicationController
   def index
     @project = Project.find(params[:project_id])
-    @buckets = @project.buckets
   end
 
   def new
+    @project = Project.find(params[:project_id])
     @bucket = Bucket.new
-    @companies = Company.all
   end
 
   def create
-    @company = Company.find_or_create_by(company_name: params[:company_name])
+    @project = Project.find(params[:project_id])
     @bucket = Bucket.new(bucket_params)
+    @bucket.project = @project
+    if @bucket.save
+      redirect_to edit_bucket_path(@bucket)
+    else
+      render :new
+    end
   end
 
   def edit

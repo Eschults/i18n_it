@@ -22,5 +22,6 @@ class Bucket < ActiveRecord::Base
 
   validates :project, presence: true
   validates :bucket_name, presence: true
-  validates :type, presence: true
+  validates :kind, presence: true
+  validates :kind, inclusion: ["s", "d"]
 end

@@ -1,71 +1,21 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
-      <div class="row">
-        <div class="col-xs-2">
-          <div class="cell">
-            Company:
-          </div>
+      <h3><%= @project.company.company_name %></h3>
+      <h4><%= @project.project_name %></h4>
+    </div>
+    <div class="col-xs-12 col-sm-4">
+      <%= form_for [@project, @bucket] do |f| %>
+        <div class="form-group">
+          <%= f.label :bucket_name, "Name" %>
+          <%= f.text_field :bucket_name, class: "form-control" %>
         </div>
-        <div class="col-xs-2">
-          <div class="cell">
-            <%= form_tag '#' do %>
-              <%= select_tag :company, options_for_select(['', @companies.map { |c| c.company_name }].flatten!), class: 'form-control' %>
-            <% end %>
-          </div>
+        <div class="form-group">
+          <%= f.label :kind, "Type" %>
+          <%= f.select :kind, [["Simple", "s"], ["Detailed", "d"]], {}, class: "form-control" %>
         </div>
-      </div>
-      <div class="row" id="headers">
-        <div class="col-xs-2">
-          <div class="cell">
-            Translation key
-          </div>
-        </div>
-        <div class="col-xs-2">
-          <div class="cell">
-            FR
-          </div>
-        </div>
-        <div class="col-xs-2">
-          <div class="cell">
-            EN
-          </div>
-        </div>
-        <div class="col-xs-2">
-          <div class="cell">
-            ES
-          </div>
-        </div>
-      </div>
-      <%= form_tag url: buckets_path(@bucket), remote: true do %>
-        <div class="row" id="new">
-          <div class="col-xs-2">
-            <div class="cell">
-              <%= text_field_tag :tanslation_key, nil, placeholder: 'ex : welcome', class: 'form-control' %>
-            </div>
-          </div>
-          <div class="col-xs-2">
-            <div class="cell">
-              <%= text_field_tag :value_fr, nil, placeholder: 'Bienvenue %s !', class: 'form-control' %>
-            </div>
-          </div>
-          <div class="col-xs-2">
-            <div class="cell">
-              <%= text_field_tag :value_en, nil, placeholder: 'Welcome %s!', class: 'form-control' %>
-            </div>
-          </div>
-          <div class="col-xs-2">
-            <div class="cell">
-              <%= text_field_tag :value_es, nil, placeholder: 'Hola %s', class: 'form-control' %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-2">
-            <div class="cell">
-              <%= submit_tag 'Add translation', class: 'btn btn-primary' %>
-            </div>
-          </div>
+        <div class="form-group">
+          <%= f.submit "Create", class: "btn btn-primary" %>
         </div>
       <% end %>
     </div>
