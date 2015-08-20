@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   resources :buckets, only: [:edit, :update] do
     resources :translations, only: :index
   end
+  get 'apis/translations', to: "apis#translations"
 end
