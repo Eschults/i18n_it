@@ -1,39 +1,51 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="bread-crumb">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h3><%= link_to @bucket.project.company.company_name, company_path(@bucket.project.company) %> > <%= link_to @bucket.project.project_name, project_path(@bucket.project) %> > <%= @bucket.bucket_name %></h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
-      <h2><%= @bucket.bucket_name %></h2>
-    </div>
-    <div class="col-xs-12">
-      <%= form_tag bucket_path(@bucket), method: :put do %>
-        <table class="table table-condensed">
-          <thead>
-            <tr>
-              <th>Translation key</th>
-              <% @bucket.project.languages.each do |language| %>
-                <th><%= language.language_key %></th>
-              <% end %>
-            </tr>
-          </thead>
-          <tbody>
-            <% @translation_keys.each do |translation_key| %>
+      <div class="edit-bucket">
+        <%= form_tag bucket_path(@bucket), method: :put do %>
+          <table class="table">
+            <thead>
               <tr>
-                <td><%= text_field_tag "translation_keys[#{translation_key}][value]", translation_key, class: "form-control" %></td>
+                <th>Translation key</th>
                 <% @bucket.project.languages.each do |language| %>
-                  <td><%= text_field_tag "translation_keys[#{translation_key}][#{language.language_key}]", Translation.get(translation_key, language) ? Translation.get(translation_key, language).text : nil, class: "form-control" %></td>
+                  <th><%= language.language_key %></th>
                 <% end %>
               </tr>
-            <% end %>
-            <tr>
-              <td><%= text_field_tag "translation_keys[new_translation_key][value]", nil, placeholder: "New key", class: "form-control" %></td>
-              <% @bucket.project.languages.each do |language| %>
-                <td><%= text_field_tag "translation_keys[new_translation_key][#{language.language_key}]", nil, class: "form-control" %></td>
+            </thead>
+            <tbody>
+              <% @translation_keys.each do |translation_key| %>
+                <tr>
+                  <td><%= text_field_tag "translation_keys[#{translation_key}][value]", translation_key, class: "form-control" %></td>
+                  <% @bucket.project.languages.each do |language| %>
+                    <td><%= text_field_tag "translation_keys[#{translation_key}][#{language.language_key}]", Translation.get(translation_key, language) ? Translation.get(translation_key, language).text : nil, class: "form-control" %></td>
+                  <% end %>
+                </tr>
               <% end %>
-            </tr>
-          </tbody>
-        </table>
-        <%= submit_tag "Save", class: "btn btn-success" %>
-        <%= link_to "Manage languages", edit_project_path(@bucket.project), class: "btn btn-primary" %>
-      <% end %>
+              <tr>
+                <td><%= text_field_tag "translation_keys[new_translation_key][value]", nil, placeholder: "New key", class: "form-control" %></td>
+                <% @bucket.project.languages.each do |language| %>
+                  <td><%= text_field_tag "translation_keys[new_translation_key][#{language.language_key}]", nil, class: "form-control" %></td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+          <%= submit_tag "Save", class: "btn btn-success" %>
+          <%= link_to "Manage languages", edit_project_path(@bucket.project), class: "btn btn-primary" %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="bread-crumb">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h3><%= link_to @project.company.company_name, company_path(@project.company)%> > <%= @project.project_name %> > Buckets</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="buckets">
+        <% if @project.buckets.size > 0 %>
+          <ul class="list-unstyled">
+            <% @project.buckets.each do |bucket| %>
+              <li>
+                <%= link_to bucket.bucket_name, edit_bucket_path(bucket) %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>No bucket yet</p>
+        <% end %>
+      </div>
+      <%= link_to "Create bucket", new_project_bucket_path(@project), class: "btn btn-success" %>
+    </div>
+  </div>
+</div>

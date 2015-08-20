@@ -1,36 +1,18 @@
 <nav class="navbar-wagon">
   <div class="container navbar-wagon-container">
-
-    <a href="">
-      i18n.it
-    </a>
-    <% if user_signed_in? %>
-      <div class="navbar-wagon-item">
-        <div class="dropdown">
-          <%= image_tag "http://placehold.it/30x30", class: "avatar dropdown-toggle", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
-          <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
-            <li>
-              <%= link_to "#" do %>
-                <i class="fa fa-user"></i> <%= t ".profile", default: "Profile" %>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to "#" do %>
-                <i class="fa fa-home"></i>  <%= t ".profile", default: "Home" %>
-              <% end %>
-            </li>
-            <li>
-              <%= link_to destroy_user_session_path, method: :delete do %>
-                <i class="fa fa-sign-out"></i>  <%= t ".sign_out", default: "Log out" %>
-              <% end %>
-            </li>
-          </ul>
-        </div>
-      </div>
-    <% else %>
-      <%= link_to t(".sign_in", default: "Login"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
-    <% end %>
-    <hr>
-    <%= link_to t(".top_call_to_action", default: "New bucket"), "#", class: "navbar-wagon-item navbar-wagon-button btn pull-right" %>
+    <ul class="list-unstyled list-inline nav-list">
+      <li>
+        <%= link_to "i18n.it", root_path, class: "brand" %>
+      </li>
+      <% if user_signed_in? %>
+        <li class="pull-right">
+          <%= link_to t(".top_call_to_action", default: "My companies"), companies_path, class: "btn btn-danger pull-right" %>
+        </li>
+      <% else %>
+        <li class="pull-right">
+          <%= link_to t(".sign_in", default: "Login"), new_user_session_path, class: "btn btn-danger" %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </nav>

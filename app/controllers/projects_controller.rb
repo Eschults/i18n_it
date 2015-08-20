@@ -1,7 +1,22 @@
 class ProjectsController < ApplicationController
-  def index
+  def new
     @company = Company.find(params[:company_id])
-    @projects = @company.projects
+    @project = Project.new
+  end
+
+  def create
+    @company = Company.find(params[:company_id])
+    @project = Project.new(project_params)
+    @project.company = @company
+    if @project.save
+      redirect_to edit_project_path(@project)
+    else
+      render :new
+    end
+  end
+
+  def show
+    @project = Project.find(params[:id])
   end
 
   def edit
@@ -18,6 +33,12 @@ class ProjectsController < ApplicationController
         @project.languages.delete(language) if @project.languages.include? language
       end
     end
-    redirect_to project_buckets_path @project
+    redirect_to project_path @project
+  end
+
+  private
+
+  def project_params
+    params.require(:project).permit(:project_name)
   end
 end

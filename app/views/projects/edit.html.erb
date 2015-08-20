@@ -1,17 +1,32 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="bread-crumb">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h3><%= link_to "Companies", companies_path %> > <%= link_to @project.company.company_name, company_path(@project.company) %> > <%= link_to @project.project_name, project_path(@project) %> > Select languages</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
-      <%= form_tag project_path(@project), method: :put do %>
-        <div class="form-group">
-          <% @languages.each do |language| %>
-            <%= label_tag language.language_key %>
-            <%= check_box_tag language.language_key, (@project.languages.include? language) ? 1 : 0, (@project.languages.include? language) ? true : false %>
-          <% end%>
-        </div>
-        <div class="form-group">
-          <%= submit_tag 'Save', class: "btn btn-primary" %>
-        </div>
-      <% end %>
+      <div class="languages">
+        <%= form_tag project_path(@project), method: :put do %>
+          <div class="form-group">
+            <% @languages.each do |language| %>
+              <%= label_tag language.language_key %>
+              <%= check_box_tag language.language_key, (@project.languages.include? language) ? 1 : 0, (@project.languages.include? language) ? true : false %>
+            <% end%>
+          </div>
+          <div class="form-group">
+            <%= submit_tag 'Save', class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

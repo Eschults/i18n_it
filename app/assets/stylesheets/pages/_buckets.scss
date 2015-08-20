@@ -1,0 +1,44 @@
+.edit-bucket {
+  margin-top: 30px;
+  table {
+    border: 1px solid #ddd;
+    thead {
+      tr {
+        th {
+          font-weight: normal;
+          background-color: #FCFCFC;
+          border-bottom: 1px solid #ddd;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          font-weight: normal;
+          padding: 1px;
+          border-top: none;
+          .form-control {
+            border-radius: 0;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            &:focus,
+            &:active {
+              border: 1px solid #5298FA;
+            }
+            &:hover {
+              background-color: #f7f7fa;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.new-bucket {
+  margin-top: 30px;
+}
+.buckets {
+  margin-top: 30px;
+}

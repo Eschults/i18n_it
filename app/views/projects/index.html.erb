@@ -1,9 +1,0 @@
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <% @projects.each do |project| %>
-        <%= link_to project.project_name, edit_project_path(project) %>
-      <% end %>
-    </div>
-  </div>
-</div>

@@ -4,7 +4,7 @@
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
-            <h3><%= link_to "Companies", companies_path %> > <%= link_to @project.company.company_name, company_path(@project.company) %> > <%= link_to @project.project_name, project_path(@project) %> > New bucket</h3>
+            <h3><%= link_to "Companies", companies_path %> > <%= link_to @company.company_name, company_path(@company) %> > New project</h3>
           </div>
         </div>
       </div>
@@ -15,14 +15,10 @@
   <div class="row">
     <div class="col-xs-12 col-sm-4">
       <div class="new-bucket">
-        <%= form_for [@project, @bucket] do |f| %>
+        <%= form_for [@company, @project] do |f| %>
           <div class="form-group">
-            <%= f.label :bucket_name, "Name" %>
-            <%= f.text_field :bucket_name, class: "form-control" %>
-          </div>
-          <div class="form-group">
-            <%= f.label :kind, "Type" %>
-            <%= f.select :kind, [["Simple", "s"], ["Detailed", "d"]], {}, class: "form-control" %>
+            <%= f.label :project_name, "Name" %>
+            <%= f.text_field :project_name, class: "form-control" %>
           </div>
           <div class="form-group">
             <%= f.submit "Create", class: "btn btn-primary" %>

@@ -1,9 +1,24 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="bread-crumb">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h3>Companies</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row">
     <div class="col-xs-12">
-      <% @companies.each do |company| %>
-        <%= link_to company.company_name, company_projects_path(company) %>
-      <% end %>
+      <div class="companies">
+        <% @companies.each do |company| %>
+          <%= link_to company.company_name, company_path(company) %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

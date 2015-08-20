@@ -8,7 +8,7 @@ gem "figaro"
 gem "simple_form"
 gem "country_select"
 gem "devise"
-gem "pundit"
+# gem "pundit"
 gem "paperclip"
 gem "aws-sdk", "< 2.0"
 

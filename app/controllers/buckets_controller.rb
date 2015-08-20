@@ -1,6 +1,6 @@
 class BucketsController < ApplicationController
   def index
-    @project = Project.find(params[:project_id])
+    @buckets = Bucket.all
   end
 
   def new
