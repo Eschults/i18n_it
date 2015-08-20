@@ -27,4 +27,8 @@ class Translation < ActiveRecord::Base
   validates :text, presence: true
   validates :bucket, presence: true
   validates :language, presence: true
+
+  def self.get(translation_key, language)
+    Translation.find_or_create_by(translation_key: translation_key, language: language)
+  end
 end
