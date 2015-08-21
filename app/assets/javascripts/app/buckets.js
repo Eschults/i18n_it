@@ -6,7 +6,7 @@ $('.sub-bucket-nav-link').on('click', function() {
   $('#sub_bucket_' + id).show();
 })
 
-$('input[type="submit"').on('click', function(event) {
+$('.js-target').on('click', function(event) {
   event.preventDefault()
   var id = $(this).attr('id').slice($(this).attr('id').lastIndexOf('_') + 1, $(this).attr('id').length)
   $('#sub_bucket_id').val(id)

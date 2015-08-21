@@ -38,9 +38,11 @@ class BucketsController < ApplicationController
     @translation_keys.each do |key|
       @bucket.project.languages.each do |language|
         if @bucket.kind == "s"
-          translation = Translation.find_or_create_by(translation_key: key, language: language, bucket: @bucket) unless params[:translation_keys][:value] == ""
-          translation.translation_key = params[:translation_keys][key][:value] unless translation.translation_key == params[:translation_keys][key][:value]
-          translation.text = params[:translation_keys][key][language.language_key] unless translation.translation_key == params[:translation_keys][key][language.language_key]
+            translation = Translation.find_or_create_by(translation_key: key, language: language, bucket: @bucket) unless params[:translation_keys][:value] == ""
+          unless translation.nil?
+            translation.translation_key = params[:translation_keys][key][:value] unless translation.translation_key == params[:translation_keys][key][:value]
+            translation.text = params[:translation_keys][key][language.language_key] unless translation.translation_key == params[:translation_keys][key][language.language_key]
+          end
         elsif @bucket.kind == "d"
           camelKey = key.split("_").map { |word| word.capitalize }.join(' ')
           translation = Translation.find_or_create_by(translation_key: key, language: language, bucket: @bucket, sub_bucket: @sub_bucket)
@@ -54,6 +56,7 @@ class BucketsController < ApplicationController
           translation.save
         end
       end
+      anchor = nil
     end
     if @bucket.kind == "s"
       unless params[:translation_keys][:new_translation_key][:value] == ""
@@ -69,8 +72,9 @@ class BucketsController < ApplicationController
           end
         end
       end
+      anchor = @sub_bucket.id
     end
-    redirect_to edit_bucket_path(@bucket, anchor: @sub_bucket.id)
+    redirect_to edit_bucket_path(@bucket, anchor: anchor)
   end
 
   private
