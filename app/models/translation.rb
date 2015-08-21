@@ -31,7 +31,7 @@ class Translation < ActiveRecord::Base
   def translations_including_self_in_array
     output = []
     bucket.project.languages.each do |language|
-      output << Translation.find_by(language: language, bucket: bucket, translation_key: translation_key)
+      output << Translation.find_by(language: language, bucket: bucket, translation_key: translation_key, sub_bucket: sub_bucket) if Translation.find_by(language: language, bucket: bucket, translation_key: translation_key, sub_bucket: sub_bucket)
     end
     output
   end
