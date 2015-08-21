@@ -16,4 +16,6 @@
 
 class BucketSchema < ActiveRecord::Base
   belongs_to :bucket
+
+  validates :bucket, presence: true
 end

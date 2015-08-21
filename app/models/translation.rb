@@ -28,10 +28,6 @@ class Translation < ActiveRecord::Base
   validates :bucket, presence: true
   validates :language, presence: true
 
-  def self.get(translation_key, language)
-    Translation.find_or_create_by(translation_key: translation_key, language: language)
-  end
-
   def translations_including_self_in_array
     output = []
     bucket.project.languages.each do |language|

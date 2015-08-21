@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="bread-crumb">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h3><%= link_to "Companies", companies_path %> > <%= link_to @bucket.project.company.company_name, company_path(@bucket.project.company) %> > <%= link_to @bucket.project.project_name, project_path(@bucket.project) %> > <%= @bucket.bucket_name %> > New field</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <div class="new-bucket-schema">
+        <%= form_for [@bucket, @bucket_schema] do |f| %>
+          <div class="form-group">
+            <%= f.label :bucket_schema_name, "Field name" %>
+            <%= f.text_field :bucket_schema_name, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.label :col_type, "Field type" %>
+            <%= f.select :col_type, [["Text", "string"], ["Text Area", "text"], ["Number", "float"]], {}, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.submit "Create", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

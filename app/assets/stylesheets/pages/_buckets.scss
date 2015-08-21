@@ -1,5 +1,4 @@
 .edit-bucket {
-  margin-top: 30px;
   table {
     border: 1px solid #ddd;
     thead {
@@ -36,9 +35,40 @@
     }
   }
 }
-.new-bucket {
+.new-bucket,
+.edit-bucket,
+.buckets,
+.new-sub-bucket,
+.new-bucket-schema {
   margin-top: 30px;
 }
 .buckets {
   margin-top: 30px;
+}
+.edit-sub-bucket {
+  .tab-content {
+    padding: 15px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    .tab-pane {
+      .form-control {
+        border-radius: 0;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        &:focus,
+        &:active {
+          border: 1px solid #5298FA;
+        }
+        &:hover {
+          background-color: #f7f7fa;
+        }
+      }
+    }
+  }
+}
+.actions {
+  padding: 15px;
 }

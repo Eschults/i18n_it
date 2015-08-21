@@ -10,8 +10,11 @@ Rails.application.routes.draw do
     resources :buckets, only: [:new, :create]
   end
   resources :buckets, only: [:edit, :update] do
-    resources :translations, only: :index
+    resources :bucket_schemas, only: [:new, :create]
+    resources :sub_buckets, only: [:new, :create]
   end
+  resources :bucket_schemas, only: [:edit, :update]
+
   get 'apis/translations', to: "apis#translations"
   get 'apis/t', to: "apis#t"
 end

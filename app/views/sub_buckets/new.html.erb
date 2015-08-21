@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="bread-crumb">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12">
+            <h3><%= link_to "Companies", companies_path %> > <%= link_to @bucket.project.company.company_name, company_path(@bucket.project.company) %> > <%= link_to @bucket.project.project_name, project_path(@bucket.project) %> > <%= @bucket.bucket_name %> > New Sub Bucket</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <div class="new-sub-bucket">
+        <%= form_for [@bucket, @sub_bucket] do |f| %>
+          <div class="form-group">
+            <%= f.label :sub_bucket_name, "Sub bucket name" %>
+            <%= f.text_field :sub_bucket_name, class: "form-control" %>
+          </div>
+          <div class="form-group">
+            <%= f.submit "Create", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
