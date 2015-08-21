@@ -57,44 +57,60 @@
         <div class="edit-bucket">
           <%= form_tag bucket_path(@bucket), method: :put do %>
             <div class="col-sm-3">
-              <ul class="sub-buckets-list list-unstyled">
-                <% @bucket.sub_buckets.each do |sub_bucket| %>
-                  <li><%= link_to sub_bucket.sub_bucket_name, "#", class: "sub-bucket-nav-link", id: sub_bucket.id %></li>
-                <% end %>
-                  <li><%= link_to 'Add Sub bucket', new_bucket_sub_bucket_path(@bucket), class: "btn btn-success" %></li>
-              </ul>
+              <div class="sub-buckets-index">
+                <ul class="list-unstyled">
+                  <% @bucket.sub_buckets.each do |sub_bucket| %>
+                    <li><%= link_to sub_bucket.sub_bucket_name, "#", class: "sub-bucket-nav-link", id: sub_bucket.id %></li>
+                  <% end %>
+                </ul>
+                <div class="actions">
+                  <%= link_to 'Add Sub bucket', new_bucket_sub_bucket_path(@bucket), class: "btn btn-success" %>
+                </div>
+              </div>
             </div>
             <div class="col-sm-9">
               <% @bucket.sub_buckets.each do |sub_bucket| %>
                 <div class="edit-sub-bucket" id="sub_bucket_<%= sub_bucket.id %>">
                   <!-- Nav tabs -->
                   <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="<%= '#' + @bucket.project.languages.first.language_key %>" aria-controls="<%= @bucket.project.languages.first.language_key %>" role="tab" data-toggle="tab"><%= @bucket.project.languages.first.language_key %></a></li>
+                    <li role="presentation" class="active"><a href="<%= '#' + sub_bucket.id.to_s + "_" + @bucket.project.languages.first.language_key %>" aria-controls="<%= sub_bucket.id.to_s + "_" + @bucket.project.languages.first.language_key %>" role="tab" data-toggle="tab"><%= @bucket.project.languages.first.language_key %></a></li>
                     <% @bucket.project.languages[1..-1].each do |language| %>
-                      <li role="presentation"><a href="<%= '#' + language.language_key %>" aria-controls="<%= language.language_key %>" role="tab" data-toggle="tab"><%= language.language_key %></a></li>
+                      <li role="presentation"><a href="<%= '#' + sub_bucket.id.to_s + "_" + language.language_key %>" aria-controls="<%= sub_bucket.id.to_s + "_" + language.language_key %>" role="tab" data-toggle="tab"><%= language.language_key %></a></li>
                     <% end %>
                   </ul>
                   <!-- Tab panes -->
                   <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="<%= @bucket.project.languages.first.language_key %>">
+                    <div role="tabpanel" class="tab-pane active" id="<%= sub_bucket.id.to_s + "_" + @bucket.project.languages.first.language_key %>">
                       <%= render "sub_buckets/sub_bucket_form", sub_bucket: sub_bucket, language: @bucket.project.languages.first %>
                     </div>
                     <% @bucket.project.languages[1..-1].each do |language| %>
-                      <div role="tabpanel" class="tab-pane" id="<%= language.language_key %>">
+                      <div role="tabpanel" class="tab-pane" id="<%= sub_bucket.id.to_s + "_" + language.language_key %>">
                         <%= render "sub_buckets/sub_bucket_form", sub_bucket: sub_bucket, language: language %>
                       </div>
                     <% end %>
+                    <div class="actions">
+                      <%= submit_tag "Save", class: "btn btn-success", id: "save_#{sub_bucket.id}" %>
+                      <%= link_to "Manage languages", edit_project_path(@bucket.project), class: "btn btn-primary" %>
+                    </div>
                   </div>
                 </div>
               <% end %>
-              <div class="actions">
-                <%= submit_tag "Save", class: "btn btn-success" %>
-                <%= link_to "Manage languages", edit_project_path(@bucket.project), class: "btn btn-primary" %>
-              </div>
             </div>
+            <%= hidden_field_tag :sub_bucket_id %>
           <% end %>
         </div>
       </div>
     </div>
   </div>
+<% end %>
+<%= content_for :after_js do %>
+  <% javascript_tag do %>
+    $(document).ready(function() {
+      if(window.location.hash) {
+        $(window.location.hash).click();
+      } else {
+        $('.sub-bucket-nav-link').first().click();
+      }
+    })
+  <% end %>
 <% end %>
