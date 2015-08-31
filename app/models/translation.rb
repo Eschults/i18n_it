@@ -43,4 +43,13 @@ class Translation < ActiveRecord::Base
     end
     output
   end
+
+  def translations_including_self_in_super_hash
+    output = {}
+    translations_including_self_in_array.each do |translation|
+      output[translation.language.language_key] = {}
+      output[translation.language.language_key][translation_key] = translation.text
+    end
+    output
+  end
 end

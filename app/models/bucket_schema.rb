@@ -18,4 +18,8 @@ class BucketSchema < ActiveRecord::Base
   belongs_to :bucket
 
   validates :bucket, presence: true
+
+  def slug
+    bucket_schema_name.downcase.gsub(' ', '_')
+  end
 end

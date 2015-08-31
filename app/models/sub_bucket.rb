@@ -20,4 +20,16 @@ class SubBucket < ActiveRecord::Base
 
   validates :bucket, presence: true
   validates :sub_bucket_name, presence: true
+
+  def data_hash
+    output = {}
+    bucket.project.languages.each do |language|
+      output[language.language_key] = {}
+      bucket.bucket_schemas.each do |bucket_schema|
+        translation = Translation.find_by(translation_key: bucket_schema.slug, language: language)
+        output[language.language_key][bucket_schema.slug] = translation ? translation.text : ""
+      end
+    end
+    output
+  end
 end
