@@ -6,6 +6,9 @@
       </li>
       <% if user_signed_in? %>
         <li class="pull-right">
+          <%= link_to t(".sign_out", default: "Logout"), destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+        </li>
+        <li class="pull-right">
           <%= link_to t(".top_call_to_action", default: "My companies"), companies_path, class: "btn btn-danger pull-right" %>
         </li>
       <% else %>

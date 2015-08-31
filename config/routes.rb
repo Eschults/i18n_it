@@ -17,4 +17,5 @@ Rails.application.routes.draw do
 
   get 'apis/translations', to: "apis#translations"
   get 'apis/t', to: "apis#t"
+  get 'apis/tt', to: "apis#tt"
 end
