@@ -4,6 +4,10 @@ class ApisController < ApplicationController
   def translations
     if params[:key]
       @translations = Translation.where(translation_key: params[:key])
+    elsif params[:project]
+      @translations = Translation.joins('INNER JOIN buckets b ON b.id = bucket_id INNER JOIN projects p ON p.id = b.project_id').where("project_id = :project",   {project: params[:project]})
+    elsif params[:bucket]
+      @translations = Translation.where(bucket_id: params[:bucket])
     else
       @translations = Translation.all
     end
@@ -12,6 +16,10 @@ class ApisController < ApplicationController
   def t
     if params[:key]
       @translations = Translation.where(translation_key: params[:key])
+    elsif params[:project]
+      @translations = Translation.joins('INNER JOIN buckets b ON b.id = bucket_id INNER JOIN projects p ON p.id = b.project_id').where("project_id = :project",   {project: params[:project]})
+    elsif params[:bucket]
+      @translations = Translation.where(bucket_id: params[:bucket])
     else
       @translations = Translation.all
     end
@@ -28,6 +36,10 @@ class ApisController < ApplicationController
   def tt
     if params[:key]
       @sub_buckets = SubBucket.where(sub_bucket_name: params[:key])
+    elsif params[:project]
+      @translations = Translation.joins('INNER JOIN buckets b ON b.id = bucket_id INNER JOIN projects p ON p.id = b.project_id').where("project_id = :project",   {project: params[:project]})
+    elsif params[:bucket]
+      @translations = Translation.where(bucket_id: params[:bucket])
     else
       @sub_buckets = SubBucket.all
     end
