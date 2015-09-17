@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917095507) do
+ActiveRecord::Schema.define(version: 20150917121631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20150917095507) do
     t.string   "bucket_schema_name"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.boolean  "cross_languages"
   end
 
   add_index "bucket_schemas", ["bucket_id"], name: "index_bucket_schemas_on_bucket_id", using: :btree

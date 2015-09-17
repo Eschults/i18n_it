@@ -54,6 +54,20 @@
       border-bottom: 1px solid #ddd;
       border-left: 1px solid #ddd;
       .tab-pane {
+        .other-bucket-schemas {
+          padding-bottom: 20px;
+          border-bottom: 1px solid #ddd;
+        }
+        .x-lang {
+          font-size: 20px;
+          margin-top: -22px;
+          span {
+            padding: 0 15px;
+            font-size: 28px;
+            font-family: "Raleway";
+            background-color: white;
+          }
+        }
         .form-control {
           border-radius: 0;
           font-size: 14px;

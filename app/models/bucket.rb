@@ -24,4 +24,12 @@ class Bucket < ActiveRecord::Base
   validates :bucket_name, presence: true
   validates :kind, presence: true
   validates :kind, inclusion: ["s", "d"]
+
+  def cross_languages_bucket_schemas
+    bucket_schemas.where(cross_languages: true)
+  end
+
+  def other_bucket_schemas
+    bucket_schemas - cross_languages_bucket_schemas
+  end
 end

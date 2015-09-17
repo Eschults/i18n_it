@@ -36,6 +36,10 @@ class Translation < ActiveRecord::Base
     output
   end
 
+  # def cross_languages?
+  #   sub_bucket
+  # end
+
   def translations_including_self_in_hash
     output = {}
     translations_including_self_in_array.each do |translation|

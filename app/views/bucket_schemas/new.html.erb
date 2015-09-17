@@ -25,6 +25,10 @@
             <%= f.select :col_type, [["Text", "string"], ["Text Area", "text"], ["Number", "float"]], {}, class: "form-control" %>
           </div>
           <div class="form-group">
+            <%= f.label :cross_languages, "Value independent from language?" %>
+            <%= f.select :cross_languages, [["No", false], ["Yes", true]], {}, class: "form-control" %>
+          </div>
+          <div class="form-group">
             <%= f.submit "Create", class: "btn btn-primary" %>
           </div>
         <% end %>
