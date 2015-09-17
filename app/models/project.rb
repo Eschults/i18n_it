@@ -17,6 +17,7 @@ class Project < ActiveRecord::Base
   belongs_to :company
   has_many :buckets
   has_and_belongs_to_many :languages
+  has_and_belongs_to_many :users
 
   validates :company, presence: true
   validates :project_name, presence: true
