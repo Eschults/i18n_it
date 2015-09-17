@@ -90,6 +90,7 @@
                     <% end %>
                     <div class="actions">
                       <%= submit_tag "Save", class: "btn btn-success js-target", id: "save_#{sub_bucket.id}" %>
+                      <%= link_to "Add field", new_bucket_bucket_schema_path(@bucket), class: "btn btn-primary" %>
                       <%= link_to "Manage languages", edit_project_path(@bucket.project), class: "btn btn-primary" %>
                     </div>
                   </div>

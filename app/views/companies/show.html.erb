@@ -16,7 +16,7 @@
     <div class="col-xs-12">
       <div class="projects">
         <ul class="list-unstyled">
-          <% @company.projects.each do |project| %>
+          <% current_user.projects.where(company: @company).each do |project| %>
             <li>
               <%= link_to project.project_name, project_path(project) %>
             </li>
