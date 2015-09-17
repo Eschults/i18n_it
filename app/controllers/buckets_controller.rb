@@ -1,17 +1,16 @@
 class BucketsController < ApplicationController
-  def index
-    @buckets = Bucket.all
-  end
-
   def new
     @project = Project.find(params[:project_id])
     @bucket = Bucket.new
+    @bucket.project = @project
+    authorize @bucket
   end
 
   def create
     @project = Project.find(params[:project_id])
     @bucket = Bucket.new(bucket_params)
     @bucket.project = @project
+    authorize @bucket
     if @bucket.save
       if @bucket.kind == "s"
         redirect_to edit_bucket_path(@bucket)
@@ -25,6 +24,7 @@ class BucketsController < ApplicationController
 
   def edit
     @bucket = Bucket.find(params[:id])
+    authorize @bucket
     @translation_keys = @bucket.translations.map { |translation| translation.translation_key }.uniq
     # if bucket.kind == "d"
     @bucket_schemas = @bucket.bucket_schemas
@@ -33,6 +33,7 @@ class BucketsController < ApplicationController
 
   def update
     @bucket = Bucket.find(params[:id])
+    authorize @bucket
     @sub_bucket = SubBucket.find(params[:sub_bucket_id]) if @bucket.kind == "d"
     @translation_keys = @bucket.translations.map { |translation| translation.translation_key }.uniq
     @translation_keys.each do |key|

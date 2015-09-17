@@ -2,11 +2,13 @@ class ProjectsController < ApplicationController
   def new
     @company = Company.find(params[:company_id])
     @project = Project.new
+    authorize @project
   end
 
   def create
     @company = Company.find(params[:company_id])
     @project = Project.new(project_params)
+    authorize @project
     @project.company = @company
     if @project.save
       redirect_to edit_project_path(@project)
@@ -17,15 +19,18 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    authorize @project
   end
 
   def edit
     @languages = Language.all
     @project = Project.find(params[:id])
+    authorize @project
   end
 
   def update
     @project = Project.find(params[:id])
+    authorize @project
     Language.all.each do |language|
       if params[language.language_key]
         @project.languages << language unless @project.languages.include? language
