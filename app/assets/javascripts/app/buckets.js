@@ -12,3 +12,9 @@ $('.js-target').on('click', function(event) {
   $('#sub_bucket_id').val(id)
   $('form').submit()
 })
+
+$('.cross-languages-bucket-schemas input').on('change', function() {
+  var id = $(this).attr('id')
+  var slicedId = id.slice(0, id.lastIndexOf('_'))
+  $('input[id^="' + slicedId + '"]').val($(this).val())
+})

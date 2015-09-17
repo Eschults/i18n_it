@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917121631) do
+ActiveRecord::Schema.define(version: 20150917133639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,11 +87,13 @@ ActiveRecord::Schema.define(version: 20150917121631) do
     t.integer  "bucket_id"
     t.integer  "sub_bucket_id"
     t.integer  "language_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "bucket_schema_id"
   end
 
   add_index "translations", ["bucket_id"], name: "index_translations_on_bucket_id", using: :btree
+  add_index "translations", ["bucket_schema_id"], name: "index_translations_on_bucket_schema_id", using: :btree
   add_index "translations", ["language_id"], name: "index_translations_on_language_id", using: :btree
   add_index "translations", ["sub_bucket_id"], name: "index_translations_on_sub_bucket_id", using: :btree
 
@@ -118,6 +120,7 @@ ActiveRecord::Schema.define(version: 20150917121631) do
   add_foreign_key "buckets", "projects"
   add_foreign_key "projects", "companies"
   add_foreign_key "sub_buckets", "buckets"
+  add_foreign_key "translations", "bucket_schemas"
   add_foreign_key "translations", "buckets"
   add_foreign_key "translations", "languages"
   add_foreign_key "translations", "sub_buckets"

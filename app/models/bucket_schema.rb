@@ -17,10 +17,15 @@
 
 class BucketSchema < ActiveRecord::Base
   belongs_to :bucket
+  has_many :translations
 
   validates :bucket, presence: true
 
   def slug
     bucket_schema_name.downcase.gsub(' ', '_')
+  end
+
+  def label
+    bucket_schema_name.split("_").map { |word| word.capitalize }.join(' ')
   end
 end

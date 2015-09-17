@@ -39,16 +39,17 @@ class BucketsController < ApplicationController
     @translation_keys.each do |key|
       @bucket.project.languages.each do |language|
         if @bucket.kind == "s"
-            translation = Translation.find_or_create_by(translation_key: key, language: language, bucket: @bucket) unless params[:translation_keys][:value] == ""
+          translation = Translation.find_or_create_by(translation_key: key, language: language, bucket: @bucket) unless params[:translation_keys][:value] == ""
           unless translation.nil?
             translation.translation_key = params[:translation_keys][key][:value] unless translation.translation_key == params[:translation_keys][key][:value]
             translation.text = params[:translation_keys][key][language.language_key] unless translation.translation_key == params[:translation_keys][key][language.language_key]
           end
         elsif @bucket.kind == "d"
           camelKey = key.split("_").map { |word| word.capitalize }.join(' ')
-          translation = Translation.find_or_create_by(translation_key: key, language: language, bucket: @bucket, sub_bucket: @sub_bucket)
-          translation.translation_key = params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][camelKey][:value] unless translation.translation_key == params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][camelKey][:value]
-          translation.text = params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][camelKey][language.language_key] unless translation.translation_key == params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][camelKey][language.language_key]
+          @bucket_schema = @bucket.bucket_schemas.find_by(bucket_schema_name: key)
+          translation = Translation.find_or_create_by(translation_key: key, language: language, bucket: @bucket, sub_bucket: @sub_bucket, bucket_schema: @bucket_schema)
+          translation.translation_key = @bucket_schema.bucket_schema_name unless translation.translation_key == params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][key][:value]
+          translation.text = params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][key][language.language_key] unless translation.translation_key == params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][key][language.language_key]
           translation.sub_bucket = @sub_bucket
         end
         unless translation.nil?
@@ -68,8 +69,8 @@ class BucketsController < ApplicationController
     elsif @bucket.kind == "d"
       @bucket.bucket_schemas.each do |bucket_schema|
         @bucket.project.languages.each do |language|
-          unless Translation.find_by(language: language, bucket: @bucket, sub_bucket: @sub_bucket, translation_key: params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][bucket_schema.bucket_schema_name][:value], text: params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][bucket_schema.bucket_schema_name][language.language_key])
-            Translation.create(language: language, bucket: @bucket, sub_bucket: @sub_bucket, translation_key: params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][bucket_schema.bucket_schema_name][:value], text: params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][bucket_schema.bucket_schema_name][language.language_key]) unless params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][bucket_schema.bucket_schema_name][language.language_key] == ""
+          unless Translation.find_by(language: language, bucket: @bucket, sub_bucket: @sub_bucket, translation_key: bucket_schema.bucket_schema_name, text: params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][bucket_schema.bucket_schema_name][language.language_key])
+            Translation.create(language: language, bucket: @bucket, sub_bucket: @sub_bucket, bucket_schema: bucket_schema, translation_key: bucket_schema.bucket_schema_name, text: params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][bucket_schema.bucket_schema_name][language.language_key]) unless params[:translation_keys]['sub_bucket_' + @sub_bucket.id.to_s][bucket_schema.bucket_schema_name][language.language_key] == ""
           end
         end
       end
