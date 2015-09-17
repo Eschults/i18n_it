@@ -1,47 +1,16 @@
-<div class="other-bucket-schemas">
-  <% @bucket.other_bucket_schemas.each do |bucket_schema| %>
-    <%# hidden_field_tag "translation_keys[sub_bucket_#{sub_bucket.id}][#{bucket_schema.bucket_schema_name}][value]", bucket_schema.slug %>
-    <% if bucket_schema.col_type == "string" %>
-      <div class="form-group">
-        <%= label_tag bucket_schema.label %>
-        <%= text_field_tag "translation_keys[sub_bucket_#{sub_bucket.id}][#{bucket_schema.bucket_schema_name}][#{language.language_key}]", Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language) ? Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language).text : nil, class: "form-control" %>
-      </div>
-    <% elsif bucket_schema.col_type == "text" %>
-      <div class="form-group">
-        <%= label_tag bucket_schema.label %>
-        <%= text_area_tag "translation_keys[sub_bucket_#{sub_bucket.id}][#{bucket_schema.bucket_schema_name}][#{language.language_key}]", Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language) ? Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language).text : nil, class: "form-control" %>
-      </div>
-    <% elsif bucket_schema.col_type == "float" %>
-      <div class="form-group">
-        <%= label_tag bucket_schema.label %>
-        <%= number_field_tag "translation_keys[sub_bucket_#{sub_bucket.id}][#{bucket_schema.bucket_schema_name}][#{language.language_key}]", Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language) ? Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language).text : nil, class: "text-field form-control", step: 0.01, placeholder: "ex: 99,99" %>
-      </div>
-    <% end %>
-  <% end %>
-</div>
-<div class="cross-languages-bucket-schemas">
-  <div class="x-lang text-center">
-    <span>
-      <%= t('.cross_languages_fields', default: "Cross-languages fields") %>
-    </span>
+<% if bucket_schema.col_type == "string" %>
+  <div class="form-group">
+    <%= label_tag bucket_schema.label %>
+    <%= text_field_tag "translation_keys[sub_bucket_#{sub_bucket.id}][#{bucket_schema.bucket_schema_name}][#{language.language_key}]", Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language) ? Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language).text : nil, class: "form-control" %>
   </div>
-  <% @bucket.cross_languages_bucket_schemas.each do |bucket_schema| %>
-    <%# hidden_field_tag "translation_keys[sub_bucket_#{sub_bucket.id}][#{bucket_schema.bucket_schema_name}][value]", bucket_schema.slug %>
-    <% if bucket_schema.col_type == "string" %>
-      <div class="form-group">
-        <%= label_tag bucket_schema.label %>
-        <%= text_field_tag "translation_keys[sub_bucket_#{sub_bucket.id}][#{bucket_schema.bucket_schema_name}][#{language.language_key}]", Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language) ? Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language).text : nil, class: "form-control" %>
-      </div>
-    <% elsif bucket_schema.col_type == "text" %>
-      <div class="form-group">
-        <%= label_tag bucket_schema.label %>
-        <%= text_area_tag "translation_keys[sub_bucket_#{sub_bucket.id}][#{bucket_schema.bucket_schema_name}][#{language.language_key}]", Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language) ? Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language).text : nil, class: "form-control" %>
-      </div>
-    <% elsif bucket_schema.col_type == "float" %>
-      <div class="form-group">
-        <%= label_tag bucket_schema.label %>
-        <%= number_field_tag "translation_keys[sub_bucket_#{sub_bucket.id}][#{bucket_schema.bucket_schema_name}][#{language.language_key}]", Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language) ? Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language).text : nil, class: "text-field form-control", step: 0.01, placeholder: "ex: 99,99" %>
-      </div>
-    <% end %>
-  <% end %>
-</div>
+<% elsif bucket_schema.col_type == "text" %>
+  <div class="form-group">
+    <%= label_tag bucket_schema.label %>
+    <%= text_area_tag "translation_keys[sub_bucket_#{sub_bucket.id}][#{bucket_schema.bucket_schema_name}][#{language.language_key}]", Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language) ? Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language).text : nil, class: "form-control" %>
+  </div>
+<% elsif bucket_schema.col_type == "float" %>
+  <div class="form-group">
+    <%= label_tag bucket_schema.label %>
+    <%= number_field_tag "translation_keys[sub_bucket_#{sub_bucket.id}][#{bucket_schema.bucket_schema_name}][#{language.language_key}]", Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language) ? Translation.find_by(bucket: @bucket, sub_bucket: sub_bucket, translation_key: bucket_schema.slug, language: language).text : nil, class: "text-field form-control", step: 0.01, placeholder: "ex: 99,99" %>
+  </div>
+<% end %>

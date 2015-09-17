@@ -81,11 +81,43 @@
                   <!-- Tab panes -->
                   <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="<%= sub_bucket.id.to_s + "_" + @bucket.project.languages.first.language_key %>">
-                      <%= render "sub_buckets/sub_bucket_form", sub_bucket: sub_bucket, language: @bucket.project.languages.first %>
+                      <div class="other-bucket-schemas">
+                        <% @bucket.other_bucket_schemas.each do |bucket_schema| %>
+                          <%= render "sub_buckets/sub_bucket_form", sub_bucket: sub_bucket, language: @bucket.project.languages.first, bucket_schema: bucket_schema %>
+                        <% end %>
+                      </div>
+                      <% if @bucket.cross_languages_bucket_schemas.size > 0 %>
+                        <div class="cross-languages-bucket-schemas">
+                          <div class="x-lang text-center">
+                            <span>
+                              <%= t('.cross_languages_fields', default: "Cross-languages fields") %>
+                            </span>
+                          </div>
+                          <% @bucket.cross_languages_bucket_schemas.each do |bucket_schema| %>
+                            <%= render "sub_buckets/sub_bucket_form", sub_bucket: sub_bucket, language: @bucket.project.languages.first, bucket_schema: bucket_schema %>
+                          <% end %>
+                        </div>
+                      <% end %>
                     </div>
                     <% @bucket.project.languages[1..-1].each do |language| %>
                       <div role="tabpanel" class="tab-pane" id="<%= sub_bucket.id.to_s + "_" + language.language_key %>">
-                        <%= render "sub_buckets/sub_bucket_form", sub_bucket: sub_bucket, language: language %>
+                        <div class="other-bucket-schemas">
+                        <% @bucket.other_bucket_schemas.each do |bucket_schema| %>
+                          <%= render "sub_buckets/sub_bucket_form", sub_bucket: sub_bucket, language: language, bucket_schema: bucket_schema %>
+                        <% end %>
+                      </div>
+                      <% if @bucket.cross_languages_bucket_schemas.size > 0 %>
+                        <div class="cross-languages-bucket-schemas">
+                          <div class="x-lang text-center">
+                            <span>
+                              <%= t('.cross_languages_fields', default: "Cross-languages fields") %>
+                            </span>
+                          </div>
+                          <% @bucket.cross_languages_bucket_schemas.each do |bucket_schema| %>
+                            <%= render "sub_buckets/sub_bucket_form", sub_bucket: sub_bucket, language: language, bucket_schema: bucket_schema %>
+                          <% end %>
+                        </div>
+                      <% end %>
                       </div>
                     <% end %>
                     <div class="actions">

@@ -26,7 +26,7 @@ class SubBucket < ActiveRecord::Base
     bucket.project.languages.each do |language|
       output[language.language_key] = {}
       bucket.bucket_schemas.each do |bucket_schema|
-        translation = Translation.find_by(translation_key: bucket_schema.slug, language: language)
+        translation = Translation.find_by(bucket_schema: bucket_schema, language: language, sub_bucket: self)
         output[language.language_key][bucket_schema.slug] = translation ? translation.text : ""
       end
     end

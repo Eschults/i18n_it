@@ -56,7 +56,9 @@
       .tab-pane {
         .other-bucket-schemas {
           padding-bottom: 20px;
-          border-bottom: 1px solid #ddd;
+        }
+        .cross-languages-bucket-schemas {
+          border-top: 1px solid #ddd;
         }
         .x-lang {
           font-size: 20px;

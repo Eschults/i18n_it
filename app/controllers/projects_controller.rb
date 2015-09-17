@@ -8,8 +8,8 @@ class ProjectsController < ApplicationController
   def create
     @company = Company.find(params[:company_id])
     @project = Project.new(project_params)
-    authorize @project
     @project.company = @company
+    authorize @project
     if @project.save
       redirect_to edit_project_path(@project)
     else

@@ -7,6 +7,7 @@
 #  project_name :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  uuid         :string
 #
 # Indexes
 #
@@ -21,4 +22,11 @@ class Project < ActiveRecord::Base
 
   validates :company, presence: true
   validates :project_name, presence: true
+
+  after_create :generate_uuid
+
+  def generate_uuid
+    self.uuid = SecureRandom.uuid
+    save
+  end
 end

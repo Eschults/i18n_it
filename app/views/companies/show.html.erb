@@ -16,13 +16,17 @@
     <div class="col-xs-12">
       <div class="projects">
         <ul class="list-unstyled">
-          <% current_user.projects.where(company: @company).each do |project| %>
-            <li>
-              <%= link_to project.project_name, project_path(project) %>
-            </li>
+          <% @company.projects.each do |project| %>
+            <% if policy(project).update? %>
+              <li>
+                <%= link_to project.project_name, project_path(project) %>
+              </li>
+            <% end %>
           <% end %>
         </ul>
-        <%= link_to "Add a project", new_company_project_path(@company), class: "btn btn-success" %>
+        <% if policy(Project).create? %>
+          <%= link_to "Add a project", new_company_project_path(@company), class: "btn btn-success" %>
+        <% end %>
       </div>
     </div>
   </div>

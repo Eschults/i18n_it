@@ -17,5 +17,6 @@ Rails.application.routes.draw do
 
   get 'apis/translations', to: "apis#translations"
   get 'apis/t', to: "apis#t"
-  get 'apis/tt', to: "apis#tt"
+  get 'apis/:project_uuid/t', to: "apis#project_translations"
+  get 'apis/:project_uuid/tt', to: "apis#project_translations_for_detailed_buckets"
 end
