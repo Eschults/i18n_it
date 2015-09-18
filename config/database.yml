@@ -80,7 +80,7 @@ test:
 #
 production:
   <<: *default
-  database: i18n
+  database: i18n_v2
   username: developer_i18n
   password: <%= ENV['I18N_IT_DATABASE_PASSWORD'] %>
   host: <%= ENV['HOST_IP'] %>

@@ -45,7 +45,6 @@ class BucketsController < ApplicationController
             translation.text = params[:translation_keys][key][language.language_key] unless translation.translation_key == params[:translation_keys][key][language.language_key]
           end
         elsif @bucket.kind == "d"
-          camelKey = key.split("_").map { |word| word.capitalize }.join(' ')
           @bucket_schema = @bucket.bucket_schemas.find_by(bucket_schema_name: key)
           translation = Translation.find_or_create_by(translation_key: key, language: language, bucket: @bucket, sub_bucket: @sub_bucket, bucket_schema: @bucket_schema)
           translation.translation_key = @bucket_schema.bucket_schema_name unless @bucket_schema.bucket_schema_name
