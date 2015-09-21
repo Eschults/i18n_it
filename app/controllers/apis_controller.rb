@@ -38,7 +38,7 @@ class ApisController < ApplicationController
     @buckets = @project.buckets
     @translations = Translation.where(bucket: @buckets)
     if params[:bucket_id]
-      @translations = @translation.where(bucket_id: params[:bucket_id])
+      @translations = @translations.where(bucket_id: params[:bucket_id])
       if params[:key]
         @translations = @translations.where(translation_key: params[:key])
       end
