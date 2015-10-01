@@ -1,0 +1,3 @@
+var flash = $('<%= j render "shared/flashes" %>').hide()
+$('nav.navbar-wagon').prepend(flash.slideDown())
+notices()

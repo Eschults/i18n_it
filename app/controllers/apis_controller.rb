@@ -17,7 +17,7 @@ class ApisController < ApplicationController
     if params[:key]
       @translations = Translation.where(translation_key: params[:key])
     elsif params[:project]
-      @translations = Translation.joins('INNER JOIN buckets b ON b.id = bucket_id INNER JOIN projects p ON p.id = b.project_id').where("project_id = :project",   {project: params[:project]})
+      @translations = Translation.where(bucket: Bucket.where(project_id: params[:project]))
     elsif params[:bucket]
       @translations = Translation.where(bucket_id: params[:bucket])
     else

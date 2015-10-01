@@ -75,7 +75,10 @@ class BucketsController < ApplicationController
       end
       anchor = @sub_bucket.id
     end
-    redirect_to edit_bucket_path(@bucket, anchor: anchor)
+    respond_to do |format|
+      format.html { redirect_to edit_bucket_path(@bucket, anchor: anchor) }
+      format.js { flash.now[:notice] = "Saved" }
+    end
   end
 
   private

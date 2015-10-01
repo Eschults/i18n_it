@@ -55,7 +55,7 @@
     <div class="row">
       <div class="col-xs-12">
         <div class="edit-bucket">
-          <%= form_tag bucket_path(@bucket), method: :put do %>
+          <%= form_tag bucket_path(@bucket), method: :put, remote: true do %>
             <div class="col-sm-3">
               <div class="sub-buckets-index">
                 <ul class="list-unstyled">
