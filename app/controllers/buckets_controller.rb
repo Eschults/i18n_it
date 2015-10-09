@@ -34,7 +34,6 @@ class BucketsController < ApplicationController
     else
       @languages = @bucket.project.languages
     end
-
   end
 
   def update
