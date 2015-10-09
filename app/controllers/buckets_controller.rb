@@ -29,6 +29,12 @@ class BucketsController < ApplicationController
     # if bucket.kind == "d"
     @bucket_schemas = @bucket.bucket_schemas
     @sub_buckets = @bucket.sub_buckets
+    if params[:languages]
+      @languages = Language.where(language_key: params['languages'].keys)
+    else
+      @languages = @bucket.project.languages
+    end
+
   end
 
   def update

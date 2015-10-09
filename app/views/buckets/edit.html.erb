@@ -21,7 +21,7 @@
               <thead>
                 <tr>
                   <th>Translation key</th>
-                  <% @bucket.project.languages.each do |language| %>
+                  <% @languages.each do |language| %>
                     <th><%= language.language_key %></th>
                   <% end %>
                 </tr>
@@ -30,22 +30,43 @@
                 <% @translation_keys.each do |translation_key| %>
                   <tr>
                     <td><%= text_field_tag "translation_keys[#{translation_key}][value]", translation_key, class: "form-control" %></td>
-                    <% @bucket.project.languages.each do |language| %>
+                    <% @languages.each do |language| %>
                       <td><%= text_field_tag "translation_keys[#{translation_key}][#{language.language_key}]", Translation.find_by(bucket: @bucket, translation_key: translation_key, language: language) ? Translation.find_by(bucket: @bucket, translation_key: translation_key, language: language).text : nil, class: "form-control" %></td>
                     <% end %>
                   </tr>
                 <% end %>
                 <tr>
                   <td><%= text_field_tag "translation_keys[new_translation_key][value]", nil, placeholder: "New translation...", class: "form-control" %></td>
-                  <% @bucket.project.languages.each do |language| %>
+                  <% @languages.each do |language| %>
                     <td><%= text_field_tag "translation_keys[new_translation_key][#{language.language_key}]", nil, class: "form-control" %></td>
                   <% end %>
                 </tr>
               </tbody>
             </table>
             <%= submit_tag "Save", class: "btn btn-success" %>
-            <%= link_to "Manage languages", edit_project_path(@bucket.project), class: "btn btn-primary" %>
+            <%= link_to "Manage languages", "#", class: "btn btn-primary", data: { toggle: "modal", target: "#languagesModal"} %>
           <% end %>
+          <div class="modal fade" id="languagesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Languages</h4>
+                </div>
+                <%= form_tag edit_bucket_path(@bucket), method: :get do %>
+                  <div class="modal-body">
+                    <% @bucket.project.languages.each do |language| %>
+                      <%= label_tag "#{language.language_key}" %>
+                      <%= check_box_tag "languages[#{language.language_key}]" %>
+                    <% end %>
+                  </div>
+                  <div class="modal-footer">
+                    <%= submit_tag "Filter", class: "btn btn-success" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -123,7 +144,6 @@
                     <div class="actions">
                       <%= submit_tag "Save", class: "btn btn-success js-target", id: "save_#{sub_bucket.id}" %>
                       <%= link_to "Add field", new_bucket_bucket_schema_path(@bucket), class: "btn btn-primary" %>
-                      <%= link_to "Manage languages", edit_project_path(@bucket.project), class: "btn btn-primary" %>
                     </div>
                   </div>
                 </div>
