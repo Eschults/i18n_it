@@ -23,7 +23,7 @@ class ApisController < ApplicationController
     else
       @translations = Translation.all.joins("LEFT JOIN buckets b ON translations.bucket_id = b.id")
     end
-    @translations = @translations.group_by { |t| t.translation_key }.values.map { |group| { ids: group.map { |tr| tr.id }, translation_key: group.first.translation_key, bucket_name: group.first.bucket.bucket_name, project_name: group.first.bucket.project.project_name, company_name: group.first.bucket.project.company.company_name, translations: eval("{" + group.map {|t| "'#{t.language.language_key}' => '#{t.text}'"}.join(", ") + "}"), sub_bucket_name: group.first.bucket.kind == "d" ? group.first.sub_bucket.sub_bucket_name : ""}}
+    @translations = @translations.group_by { |t| t.translation_key }.values.map { |group| { ids: group.map { |tr| tr.id }, translation_key: group.first.translation_key, bucket_name: group.first.bucket.bucket_name, project_name: group.first.bucket.project.project_name, company_name: group.first.bucket.project.company.company_name, translations: eval("{" + group.map {|t| "'#{t.language.language_key}' => '#{t.text.gsub("'", "&#39;").gsub('"', '&quot;')}'"}.join(", ") + "}"), sub_bucket_name: group.first.bucket.kind == "d" ? group.first.sub_bucket.sub_bucket_name : ""}}
   end
 
   def project_translations
