@@ -1,0 +1,6 @@
+<tr>
+  <td><%= text_field_tag "translation_keys[new_translation_key][value]", nil, placeholder: "New translation...", class: "form-control" %></td>
+  <% @languages.each do |language| %>
+    <td><%= text_field_tag "translation_keys[new_translation_key][#{language.language_key}]", nil, class: "form-control" %></td>
+  <% end %>
+</tr>

@@ -33,8 +33,7 @@ class ApisController < ApplicationController
             bucket_name: group.first.bucket.bucket_name,
             project_name: group.first.bucket.project.project_name,
             company_name: group.first.bucket.project.company.company_name,
-            translations: eval("{" + group.map {|t| "'#{t.language.language_key}' => '#{t.text.gsub("'", "&#39;").gsub('"', '&quot;')}'"}.join(", ") + "}"),
-            sub_bucket_name: group.first.bucket.kind == "d" ? group.first.sub_bucket.sub_bucket_name : ""
+            translations: eval("{" + group.map {|t| "'#{t.language.language_key}' => '#{t.text.gsub("'", "&#39;").gsub('"', '&quot;')}'"}.join(", ") + "}")
           }
         end
       else
@@ -47,7 +46,7 @@ class ApisController < ApplicationController
               project_name: group.first.bucket.project.project_name,
               company_name: group.first.bucket.project.company.company_name,
               translations: eval("{" + group.map {|t| "'#{t.language.language_key}' => '#{t.text.gsub("'", "&#39;").gsub('"', '&quot;')}'"}.join(", ") + "}"),
-              sub_bucket_name: group.first.bucket.kind == "d" ? group.first.sub_bucket.sub_bucket_name : ""
+              sub_bucket_name: group.first.sub_bucket.sub_bucket_name
             }
           end
         end

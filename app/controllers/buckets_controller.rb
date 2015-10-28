@@ -70,6 +70,11 @@ class BucketsController < ApplicationController
           Translation.create(language: language, bucket: @bucket, translation_key: params[:translation_keys][:new_translation_key][:value], text: params[:translation_keys][:new_translation_key][language.language_key]) unless params[:translation_keys][:new_translation_key][language.language_key] == ""
         end
       end
+      if params[:languages]
+        @languages = Language.where(language_key: params['languages'].keys)
+      else
+        @languages = @bucket.project.languages
+      end
     elsif @bucket.kind == "d"
       @bucket.bucket_schemas.each do |bucket_schema|
         @bucket.project.languages.each do |language|

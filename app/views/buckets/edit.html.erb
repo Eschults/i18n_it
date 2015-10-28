@@ -35,12 +35,7 @@
                     <% end %>
                   </tr>
                 <% end %>
-                <tr>
-                  <td><%= text_field_tag "translation_keys[new_translation_key][value]", nil, placeholder: "New translation...", class: "form-control" %></td>
-                  <% @languages.each do |language| %>
-                    <td><%= text_field_tag "translation_keys[new_translation_key][#{language.language_key}]", nil, class: "form-control" %></td>
-                  <% end %>
-                </tr>
+                <%= render "new_trad_simple" %>
               </tbody>
             </table>
             <%= submit_tag "Save", class: "btn btn-success" %>
@@ -57,7 +52,8 @@
                   <div class="modal-body">
                     <% @bucket.project.languages.each do |language| %>
                       <%= label_tag "#{language.language_key}" %>
-                      <%= check_box_tag "languages[#{language.language_key}]" %>
+                      <%= check_box_tag "languages[#{language.language_key}]", '', @languages.include?(language) ? true : false %>
+                      <br>
                     <% end %>
                   </div>
                   <div class="modal-footer">
@@ -80,7 +76,7 @@
             <div class="col-sm-3">
               <div class="sub-buckets-index">
                 <ul class="list-unstyled">
-                  <% @bucket.sub_buckets.each do |sub_bucket| %>
+                  <% @bucket.sub_buckets.order(:sub_bucket_name).each do |sub_bucket| %>
                     <li><%= link_to sub_bucket.sub_bucket_name, "#", class: "sub-bucket-nav-link", id: sub_bucket.id %></li>
                   <% end %>
                 </ul>
