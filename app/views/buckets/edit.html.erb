@@ -44,7 +44,7 @@
                 <%= render "new_trad_simple" %>
               </tbody>
             </table>
-            <%= submit_tag "Save", class: "btn btn-success" %>
+            <%= submit_tag "Save", class: "btn btn-success", id: "simpleSubmit" %>
             <%= link_to "Manage languages", "#", class: "btn btn-primary", data: { toggle: "modal", target: "#languagesModal"} %>
             <span id="placeholder"></span>
           <% end %>
@@ -167,6 +167,19 @@
       } else {
         $('.sub-bucket-nav-link').first().click();
       }
+      $('#simpleSubmit').on('click', function(event) {
+        event.preventDefault()
+        var values = []
+        $('td:first-child input').each(function() {
+          values.push($(this).val())
+        })
+        if(values.indexOf($('#translation_keys_new_translation_key_value').val() != (values.length - 1))) {
+          $('#placeholder').text('This key already exists').addClass('error').delay(5000).slideUp()
+          $('#translation_keys_new_translation_key_value').focus()
+        } else {
+          $(this).parent().submit()
+        }
+      })
     })
   <% end %>
 <% end %>
