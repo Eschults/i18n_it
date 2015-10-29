@@ -86,7 +86,7 @@
             <div class="col-sm-3">
               <div class="sub-buckets-index">
                 <ul class="list-unstyled">
-                  <% @bucket.sub_buckets.order(:sub_bucket_name).each do |sub_bucket| %>
+                  <% @bucket.sub_buckets.sort_by(&:sub_bucket_name).each do |sub_bucket| %>
                     <li><%= link_to sub_bucket.sub_bucket_name, "#", class: "sub-bucket-nav-link", id: sub_bucket.id %></li>
                   <% end %>
                 </ul>
@@ -96,7 +96,7 @@
               </div>
             </div>
             <div class="col-sm-9">
-              <% @bucket.sub_buckets.each do |sub_bucket| %>
+              <% @bucket.sub_buckets.sort_by(&:sub_bucket_name).each do |sub_bucket| %>
                 <div class="edit-sub-bucket" id="sub_bucket_<%= sub_bucket.id %>">
                   <!-- Nav tabs -->
                   <ul class="nav nav-tabs" role="tablist">
