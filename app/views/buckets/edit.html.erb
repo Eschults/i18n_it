@@ -31,7 +31,12 @@
                   <tr>
                     <td><%= text_field_tag "translation_keys[#{translation_key}][value]", translation_key, class: "form-control" %></td>
                     <% @languages.each do |language| %>
-                      <td><%= text_field_tag "translation_keys[#{translation_key}][#{language.language_key}]", Translation.find_by(bucket: @bucket, translation_key: translation_key, language: language) ? Translation.find_by(bucket: @bucket, translation_key: translation_key, language: language).text : nil, class: "form-control" %></td>
+                      <td>
+                        <% if Translation.find_by(bucket: @bucket, translation_key: translation_key, language: language) %>
+                          <span class="close"><%= link_to "x", delete_translation_path(Translation.find_by(bucket: @bucket, translation_key: translation_key, language: language)), method: :delete, data: { confirm: "Are you sure?" } %></span>
+                        <% end %>
+                        <%= text_field_tag "translation_keys[#{translation_key}][#{language.language_key}]", Translation.find_by(bucket: @bucket, translation_key: translation_key, language: language) ? Translation.find_by(bucket: @bucket, translation_key: translation_key, language: language).text : nil, class: "form-control" %>
+                      </td>
                     <% end %>
                   </tr>
                 <% end %>

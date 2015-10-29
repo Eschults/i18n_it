@@ -12,4 +12,8 @@ class BucketPolicy < ApplicationPolicy
   def update?
     user.admin? || user.projects.include?(record.project)
   end
+
+  def destroy_translation?
+    user.admin? || user.projects.include?(record.project)
+  end
 end

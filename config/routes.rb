@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :sub_buckets, only: [:new, :create]
   end
   resources :bucket_schemas, only: [:edit, :update]
+  delete 'translations/:id', to: "buckets#destroy_translation", as: :delete_translation
 
   get 'apis/translations', to: "apis#translations"
   get 'apis/t', to: "apis#t"

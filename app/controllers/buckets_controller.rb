@@ -91,6 +91,14 @@ class BucketsController < ApplicationController
     end
   end
 
+  def destroy_translation
+    @translation = Translation.find(params[:id])
+    @bucket = @translation.bucket
+    authorize @bucket
+    @translation.delete
+    redirect_to edit_bucket_path(@translation.bucket)
+  end
+
   private
 
   def bucket_params
