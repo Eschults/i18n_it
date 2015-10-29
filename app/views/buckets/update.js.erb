@@ -1,3 +1,30 @@
-var flash = $('<%= j render "shared/flashes" %>').hide()
-$('nav.navbar-wagon').prepend(flash.slideDown())
-notices()
+<% if @bucket.errors.any? %>
+  $('#placeholder').text('Something went wrong').removeClass('success').addClass('error').delay(2000).slideUp()
+<% elsif @bucket.kind == "s" %>
+  if($('#translation_keys_new_translation_key_value').val() != "") {
+    var new_key = $('#translation_keys_new_translation_key_value').val()
+    var inputs = $('*[id*=new_translation_key]:visible')
+    for(i=0; i<inputs.length; i++) {
+      inputs.eq(i).attr('name', inputs.eq(i).attr('name').replace(/new_translation_key/g, new_key))
+      inputs.eq(i).attr('id', inputs.eq(i).attr('id').replace(/new_translation_key/g, new_key))
+    }
+    setTimeout(function() {
+      $('tbody').append('<%= j render "new_trad_simple" %>')
+      $('#placeholder').text('Saved').addClass('success').removeClass('error').delay(2000).slideUp()
+    }, 400)
+  } else {
+    var inputs = $('*[id*=new_translation_key]:visible')
+    for(i=0; i<inputs.length; i++) {
+      inputs.eq(i).val("")
+    }
+  }
+<% else %>
+  var flash = $('<%= j render "shared/flashes" %>').hide()
+  $('nav.navbar-wagon').prepend(flash.slideDown())
+  notices()
+<% end %>
+
+// if(inputs.eq(i).val() != "") {
+//  inputs.eq(i).attr('id', inputs.eq(i).attr('id').replace(/new_translation_key/g, new_key)).parent().prepend('<span class="close"><%# link_to "x", delete_translation_path(Translation.find_by(bucket: @bucket, translation_key: ' + new_key + ', language: ' + inputs.eq(i).attr("id").slice(inputs.eq(i).attr("id").lastIndexOf("_") + 1) + ')), method: :delete, data: { confirm: "Are you sure?" } %></span>')
+// } else {
+// }

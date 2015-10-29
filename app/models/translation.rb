@@ -27,7 +27,7 @@ class Translation < ActiveRecord::Base
   belongs_to :language
 
   validates :translation_key, presence: true
-  validates :text, presence: true
+  # validates :text, presence: true
   validates :bucket, presence: true
   validates :language, presence: true
 
