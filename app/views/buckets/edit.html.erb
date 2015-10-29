@@ -100,8 +100,8 @@
                 <div class="edit-sub-bucket" id="sub_bucket_<%= sub_bucket.id %>">
                   <!-- Nav tabs -->
                   <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="<%= '#' + sub_bucket.id.to_s + "_" + @bucket.project.languages.first.language_key %>" aria-controls="<%= sub_bucket.id.to_s + "_" + @bucket.project.languages.first.language_key %>" role="tab" data-toggle="tab"><%= @bucket.project.languages.first.language_key %></a></li>
-                    <% @bucket.project.languages[1..-1].each do |language| %>
+                    <li role="presentation" class="active"><a href="<%= '#' + sub_bucket.id.to_s + "_" + @bucket.project.languages.first.language_key %>" aria-controls="<%= sub_bucket.id.to_s + "_" + @bucket.project.languages.first.language_key %>" role="tab" data-toggle="tab"><%= @bucket.project.languages.sort_by(&:language_key).first.language_key %></a></li>
+                    <% @bucket.project.languages.sort_by(&:language_key)[1..-1].each do |language| %>
                       <li role="presentation"><a href="<%= '#' + sub_bucket.id.to_s + "_" + language.language_key %>" aria-controls="<%= sub_bucket.id.to_s + "_" + language.language_key %>" role="tab" data-toggle="tab"><%= language.language_key %></a></li>
                     <% end %>
                   </ul>
