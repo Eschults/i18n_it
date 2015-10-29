@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   end
   resources :bucket_schemas, only: [:edit, :update]
   delete 'translations/:id', to: "buckets#destroy_translation", as: :delete_translation
+  delete 'bucket/:bucket_id/translations/:key', to: "buckets#destroy_translation_key", as: :delete_translation_key
 
   get 'apis/translations', to: "apis#translations"
   get 'apis/t', to: "apis#t"

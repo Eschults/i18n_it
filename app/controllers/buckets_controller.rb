@@ -99,6 +99,14 @@ class BucketsController < ApplicationController
     redirect_to edit_bucket_path(@translation.bucket)
   end
 
+  def destroy_translation_key
+    @bucket = Bucket.find(params[:bucket_id])
+    authorize @bucket
+    @translations = Translation.where(bucket: @bucket, translation_key: params[:key])
+    @translations.delete_all
+    redirect_to edit_bucket_path(@bucket)
+  end
+
   private
 
   def bucket_params

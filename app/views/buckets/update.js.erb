@@ -1,5 +1,5 @@
 <% if @bucket.errors.any? %>
-  $('#placeholder').text('Something went wrong').removeClass('success').addClass('error').delay(2000).slideUp()
+  $('#placeholder').text('Something went wrong').removeClass('success').addClass('error').slideDown().delay(2000).slideUp()
 <% elsif @bucket.kind == "s" %>
   if($('#translation_keys_new_translation_key_value').val() != "") {
     var new_key = $('#translation_keys_new_translation_key_value').val()
@@ -9,8 +9,10 @@
       inputs.eq(i).attr('id', inputs.eq(i).attr('id').replace(/new_translation_key/g, new_key))
     }
     setTimeout(function() {
-      $('tbody').append('<%= j render "new_trad_simple" %>')
-      $('#placeholder').text('Saved').addClass('success').removeClass('error').delay(2000).slideUp()
+      var new_line = $('<%= j render "new_trad_simple" %>').hide()
+      $('tbody').append(new_line)
+      new_line.slideDown()
+      $('#placeholder').text('Saved').addClass('success').removeClass('error').slideDown().delay(2000).slideUp()
     }, 400)
   } else {
     var inputs = $('*[id*=new_translation_key]:visible')
