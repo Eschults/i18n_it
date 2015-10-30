@@ -14,45 +14,26 @@ class ApisController < ApplicationController
   end
 
   def t
-    if params[:key]
-      @translations = Translation.where(translation_key: params[:key]).joins("LEFT JOIN buckets b ON translations.bucket_id = b.id")
-    elsif params[:project]
-      @translations = Translation.where(bucket: Bucket.where(project_id: params[:project])).joins("LEFT JOIN buckets b ON translations.bucket_id = b.id")
-    elsif params[:bucket]
-      @translations = Translation.where(bucket_id: params[:bucket]).joins("LEFT JOIN buckets b ON translations.bucket_id = b.id")
-    else
-      @translations = Translation.all.joins("LEFT JOIN buckets b ON translations.bucket_id = b.id")
-    end
-    output = []
-    @translations.group_by { |t| t.bucket_id }.values.each do |bucket_group|
-      if bucket_group.first.bucket.kind == "s"
-        bucket_group.group_by { |t| t.translation_key }.values.map do |group|
-          output << {
-            ids: group.map { |tr| tr.id },
-            translation_key: group.first.translation_key,
-            bucket_name: group.first.bucket.bucket_name,
-            project_name: group.first.bucket.project.project_name,
-            company_name: group.first.bucket.project.company.company_name,
-            translations: eval("{" + group.map {|t| "'#{t.language.language_key}' => '#{t.text.gsub("'", "&#39;").gsub('"', '&quot;')}'"}.join(", ") + "}")
-          }
-        end
-      else
-        bucket_group.group_by { |t| t.sub_bucket_id }.values.each do |sub_bucket_group|
-          sub_bucket_group.group_by { |t| t.translation_key }.values.map do |group|
-            output << {
-              ids: group.map { |tr| tr.id },
-              translation_key: group.first.translation_key,
-              bucket_name: group.first.bucket.bucket_name,
-              project_name: group.first.bucket.project.project_name,
-              company_name: group.first.bucket.project.company.company_name,
-              translations: eval("{" + group.map {|t| "'#{t.language.language_key}' => '#{t.text.gsub("'", "&#39;").gsub('"', '&quot;')}'"}.join(", ") + "}"),
-              sub_bucket_name: group.first.sub_bucket.sub_bucket_name
-            }
-          end
-        end
-      end
-    end
-    @translations = output
+    @output = PG.connect(dbname: Rails.configuration.database_configuration[Rails.env]["database"]).exec("
+      SELECT
+          json_agg(t.id) as ids,
+          t.translation_key,
+          sb.sub_bucket_name,
+          p.project_name,
+          t.bucket_id,
+          json_object_agg( l.language_key, t.text ) as translations
+      FROM translations t
+      LEFT JOIN languages l ON l.id = t.language_id
+      LEFT JOIN buckets b ON b.id = t.bucket_id
+      LEFT JOIN sub_buckets sb ON sb.id = t.sub_bucket_id
+      LEFT JOIN projects p ON p.id = b.project_id
+      " + (params[:project] ? "WHERE p.id = " + params[:project] : "") +
+      "GROUP BY
+          t.bucket_id,
+          t.translation_key,
+          sb.sub_bucket_name,
+          p.project_name
+    ")
   end
 
   def project_translations

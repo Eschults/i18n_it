@@ -1,5 +1,4 @@
 <% if @bucket.errors.any? %>
-  $('#placeholder').text('Something went wrong').removeClass('success').addClass('error').slideDown().delay(2000).slideUp()
 <% elsif @bucket.kind == "s" %>
   if($('#translation_keys_new_translation_key_value').val() != "") {
     var new_key = $('#translation_keys_new_translation_key_value').val()
@@ -19,6 +18,7 @@
     for(i=0; i<inputs.length; i++) {
       inputs.eq(i).val("")
     }
+    $('#placeholder').text('Saved').addClass('success').removeClass('error').slideDown().delay(2000).slideUp()
   }
 <% else %>
   var flash = $('<%= j render "shared/flashes" %>').hide()
