@@ -14,7 +14,13 @@ class ApisController < ApplicationController
   end
 
   def t
-    @output = PG.connect(dbname: Rails.configuration.database_configuration[Rails.env]["database"]).exec("
+    @output = PG.connect(
+      dbname: Rails.configuration.database_configuration[Rails.env]["database"],
+      user: Rails.configuration.database_configuration[Rails.env]["username"],
+      password: Rails.configuration.database_configuration[Rails.env]["password"],
+      host: Rails.configuration.database_configuration[Rails.env]["host"],
+      port: Rails.configuration.database_configuration[Rails.env]["port"]
+    ).exec("
       SELECT
           json_agg(t.id) as ids,
           t.translation_key,
