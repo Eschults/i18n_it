@@ -33,7 +33,9 @@ class ApisController < ApplicationController
       LEFT JOIN buckets b ON b.id = t.bucket_id
       LEFT JOIN sub_buckets sb ON sb.id = t.sub_bucket_id
       LEFT JOIN projects p ON p.id = b.project_id
-      " + (params[:project] ? "WHERE p.id = " + params[:project] : "") +
+      WHERE 1=1 " +
+      (params[:project] ? " AND p.id = " + params[:project] : "") +
+      (params[:bucket] ? " AND b.id = " + params[:bucket] : "") +
       "GROUP BY
           t.bucket_id,
           t.translation_key,
